@@ -1,5 +1,5 @@
 from instapi import Client 
 
-x = Client(cookie='')
+x = Client('')
 print(x.is_login)
-x.unfollow(username='abcs')
+print(x.unfollow(username='ivan.fmsyh'))

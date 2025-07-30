@@ -10,8 +10,6 @@ class InstagramUser:
     def login(func):
         def wrapper(self, *args, **kwargs):
             if not self.is_login:
-                self.extract_user_information():
-            else:
                 raise CookieError('Invalid cookie. Please use another cookie!!!')           
             return func(self, *args, **kwargs)
         return wrapper
