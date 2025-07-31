@@ -1,8 +1,7 @@
 import re, json
 from .nested import auto_dataclass, dataclass_from_dict
 from ..exceptions import CookieError, UserNotFound, GraphqlError
-from .. import config
-from .. import utils
+from .. import config, utils
 from requests.exceptions import JSONDecodeError
 
 
@@ -32,6 +31,7 @@ class InstagramUser:
         except AttributeError:
             return False
 
+    @login
     def unfollow(self, username: str) -> bool:
         target = self.user_information(username=username)
         variables = json.dumps({"target_user_id":target.id,"container_module":"profile","nav_chain":"PolarisProfilePostsTabRoot:profilePage:1:via_cold_start"})
@@ -41,8 +41,22 @@ class InstagramUser:
 
         response = self.graphql(data=payload)
         if 'xdt_destroy_friendship' in str(response):
-            data = {'full_name': target.full_name, 'id': target.id, 'username': target.username, 'is_private': target.is_private, 'profile_pic_url': target.profile_pic_url}
+            data = {'full_name': target.full_name, 'id': target.id, 'username': target.username}
             return dataclass_from_dict(auto_dataclass('UnfollowUser', data), data)
-        
+        else:
+            raise GraphqlError('Graphql api error. Please check your cookies!!!')
+
+    @login 
+    def follow(self, username: str) -> bool:
+        target = self.user_information(username=username)
+        variables = json.dumps({"target_user_id":target.id,"container_module":"profile","nav_chain":"PolarisProfilePostsTabRoot:profilePage:1:via_cold_start"})
+
+        payload = utils.payload(source=self.base_source)
+        payload.update({'fb_api_req_friendly_name': 'usePolarisFollowMutation','variables': variables,'server_timestamps': 'true','doc_id': '9740159112729312'})
+
+        response = self.graphql(data=payload)
+        if 'xdt_create_friendship' in str(response):
+            data = {'full_name': target.full_name, 'id': target.id, 'username': target.username}
+            return dataclass_from_dict(auto_dataclass('FollowUser', data), data)
         else:
             raise GraphqlError('Graphql api error. Please check your cookies!!!')
