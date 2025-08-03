@@ -41,3 +41,15 @@ UnfollowUser(full_name='Ivan Firmansyah', id='65122884339', username='ivan.fmsyh
 >>> data = ig.follow(username=target_username)
 FollowUser(full_name='Ivan Firmansyah', id='65122884339', username='ivan.fmsyh')
 ```
+
+## Post information
+```python
+>>> data = ig.post_information(url='https://insta...')
+PostInformation(media_id='3690780662392912400', like_count=13, comment_count=0, url='https://www.instagram.com/jurnalpantura.id/p/DM4SXU1z3oQ/', username='jurnalpantura.id')
+```
+
+## Like post
+```python
+>>> data = ig.like(url='https://istagra...') # or use media_id='3690780....'
+LikePost(publisher_id='6012782922', media_id='3690780662392912400')
+```
