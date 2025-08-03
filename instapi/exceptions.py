@@ -6,3 +6,6 @@ class UserNotFound(Exception):
 
 class GraphqlError(Exception):
     pass
+
+class PostNotFound(Exception):
+    pass 

@@ -2,9 +2,10 @@ import requests
 import json, re
 from .. import config
 from .user import InstagramUser
+from .post import InstagramPost
 
 
-class InstagramRequest(InstagramUser):
+class InstagramRequest(InstagramUser, InstagramPost):
     def __init__(self, cookie: str, useragent: str = None) -> None:
         self.session = requests.session()
         self.session.cookies['cookie'] = cookie

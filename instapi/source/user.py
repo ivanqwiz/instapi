@@ -32,7 +32,7 @@ class InstagramUser:
             return False
 
     @login
-    def unfollow(self, username: str) -> bool:
+    def unfollow(self, username: str) -> dataclass_from_dict:
         target = self.user_information(username=username)
         variables = json.dumps({"target_user_id":target.id,"container_module":"profile","nav_chain":"PolarisProfilePostsTabRoot:profilePage:1:via_cold_start"})
 
@@ -47,7 +47,7 @@ class InstagramUser:
             raise GraphqlError('Graphql api error. Please check your cookies!!!')
 
     @login 
-    def follow(self, username: str) -> bool:
+    def follow(self, username: str) -> dataclass_from_dict:
         target = self.user_information(username=username)
         variables = json.dumps({"target_user_id":target.id,"container_module":"profile","nav_chain":"PolarisProfilePostsTabRoot:profilePage:1:via_cold_start"})
 
